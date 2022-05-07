@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+.samaj-btn{
+    margin-bottom: 10px;
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px 20px;
+    font-size: 13px;
+    position: relative;
+    cursor: pointer;
+    border-radius: 30px;
+    background: #0135cf;
+    color: #fff;
+    text-decoration: none;
+    border: 2px solid #0135cf;
+    letter-spacing: .1rem;
+}
+.samaj-btn:hover{
+    color: #062bc0;
+    background: transparent;
+    text-decoration: none;
+}
+.samaja-btn{
+    margin-bottom: 10px;
+    display: inline-block;
+    text-decoration: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    position: relative;
+    cursor: pointer;
+    border-radius: 30px;
+    background: #0135cf;
+    color: #fff;
+    text-decoration: none;
+    border: 2px solid #062bc0;
+}
+.samaja-btn:hover{
+    color: #0135cf;
+    background: transparent;
+    text-decoration: none;
+}
