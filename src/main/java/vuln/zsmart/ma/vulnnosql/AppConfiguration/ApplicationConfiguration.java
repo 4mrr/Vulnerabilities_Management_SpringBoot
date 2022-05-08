@@ -36,7 +36,7 @@ public class ApplicationConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users.html/AddNew").permitAll()
                 .antMatchers("/resume.html/**").permitAll()
                 .antMatchers("/forgot-password.html","/reset-password.html").permitAll()
-                .antMatchers("/users.html/security/user/Edit/**").hasAuthority("ADMIN")
+                .antMatchers("/users.html/security/user/Edit/**").hasAuthority("SUPER_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -50,16 +50,6 @@ public class ApplicationConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login.html").permitAll();
     }
-
-
-/*
-    @Bean
-    public PasswordEncoder passwordEncoder()
-    {
-        return NoOpPasswordEncoder.getInstance();
-    }
-*/
-
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder()

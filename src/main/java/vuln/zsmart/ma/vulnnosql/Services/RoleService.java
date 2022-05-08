@@ -1,12 +1,12 @@
-package vuln.zsmart.ma.vulnnosql.Securityy.Services;
+package vuln.zsmart.ma.vulnnosql.Services;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vuln.zsmart.ma.vulnnosql.Beans.User;
 import vuln.zsmart.ma.vulnnosql.DAO.UserDAO;
-import vuln.zsmart.ma.vulnnosql.Securityy.DAOs.RoleDAO;
-import vuln.zsmart.ma.vulnnosql.Securityy.Models.Role;
+import vuln.zsmart.ma.vulnnosql.DAO.RoleDAO;
+import vuln.zsmart.ma.vulnnosql.Beans.Role;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,19 +42,9 @@ public class RoleService {
     public void assignUserRole(ObjectId userId, ObjectId roleId){
         User user  = userDAO.findById(userId).get();
         Role role = roleDAO.findById(roleId).get();
-
-        List<Role> userRoles = new ArrayList<Role>();
-        if(user.getRoles() == null)
-        {
-            userRoles.add(role);
-            user.setRoles(userRoles);
-            userDAO.save(user);
-        }else
-        {
+        //List<Role> userRoles = user.getRoles();
             user.getRoles().add(role);
             userDAO.save(user);
-        }
-
     }
     public void unassignUserRole(ObjectId userId, ObjectId roleId){
         User user  = userDAO.findById(userId).get();
@@ -71,7 +61,7 @@ public class RoleService {
         return user.getRoles();
     }
 
-    public List<Role> getUserNotRoles(ObjectId userId)
+/*    public List<Role> getUserNotRoles(ObjectId userId)
     {
         User user =  userDAO.findById(userId).get();
         List<Role> listRoles = roleDAO.findAll();
@@ -92,6 +82,33 @@ public class RoleService {
             }
             return newList;
         }
+    }*/
+
+    public List<Role> getUserNotRoles(ObjectId id)
+    {
+        return roleDAO.getUserNotRoles(id);
+    }
+
+    public List<Role> getUserNotRoles(User user)
+    {
+        List<Role> result = new ArrayList<Role>();
+        List<Role> AllRoles=  roleDAO.findAll();
+        if(user.getRoles().isEmpty())
+        {
+            return AllRoles;
+        }else{
+            for(int i=0; i< AllRoles.size();i++)
+            {
+                if(user.getRoles().get(i).getId() != (AllRoles.get(i).getId()))
+                {
+                        result.add(AllRoles.get(i));
+                }
+            }
+            return result;
+        }
+
+
+
     }
 
 }

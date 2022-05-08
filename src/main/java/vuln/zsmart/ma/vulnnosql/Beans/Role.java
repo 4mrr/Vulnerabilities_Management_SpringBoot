@@ -1,4 +1,4 @@
-package vuln.zsmart.ma.vulnnosql.Securityy.Models;
+package vuln.zsmart.ma.vulnnosql.Beans;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -45,4 +45,12 @@ public class Role {
         this.detail = detail;
     }
 
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", detail='" + detail + '\'' +
+                '}';
+    }
 }

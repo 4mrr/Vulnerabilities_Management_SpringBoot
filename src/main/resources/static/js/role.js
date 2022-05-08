@@ -6,14 +6,13 @@ $('document').ready(function()
 
         var href = $(this).attr('href');
         $.get(href,function(role,status)
-        $.get(href,function(role,status)
         {
+            $('#editId').val(role.id);
             $('#editDescription').val(role.description);
             $('#editDetail').val(role.detail);
         });
         $('#editModal').modal('show');
     })
-
 
     $('#deleteButtom').on('click',function(event)
     {
@@ -23,7 +22,7 @@ $('document').ready(function()
         $('#deleteModal').modal('show');
     });
 
-    $('#detailsButton-v').on('click',function(event)
+    $('#detailsButton').on('click',function(event)
     {
         event.preventDefault();
 
@@ -36,5 +35,4 @@ $('document').ready(function()
         });
         $('#detailsModal').modal('show');
     });
-
 });

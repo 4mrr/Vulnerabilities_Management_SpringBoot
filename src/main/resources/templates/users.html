@@ -106,9 +106,9 @@
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-      <a class="nav-link" href="404.html" th:href="@{/404.html}">
+      <a class="nav-link" href="role.html" th:href="@{/role.html}">
         <i class="fas fa-fw fa-table"></i>
-        <span>Blogs</span></a>
+        <span>Roles Managements</span></a>
     </li>
 
     <!-- Divider -->
@@ -552,7 +552,7 @@
                 <td th:text="${user.getAdress()}"></td>
                 <td id="number" th:text="${user.getVulnerbilites() == null ? '0': user.getVulnerbilites().size()}" ></td>
                 <td align="center">
-                  <a  th:href="@{'/users.html/security/user/Edit/'+${user.getId()}}" class="btn btn-primary"><i class="icon_pencil-edit"></i>Manage Roles</a>
+                  <a  th:href="@{'/users.html/security/user/Edit/'+${user.username}}" class="btn btn-primary"><i class="icon_pencil-edit"></i>Manage Roles</a>
                 </td>
                 <td align="center">
                   <div class="btn-group">

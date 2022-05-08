@@ -1,4 +1,4 @@
-package vuln.zsmart.ma.vulnnosql.Securityy.Controllers;
+package vuln.zsmart.ma.vulnnosql.Controller;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import vuln.zsmart.ma.vulnnosql.Beans.Photo;
 import vuln.zsmart.ma.vulnnosql.Beans.User;
 import vuln.zsmart.ma.vulnnosql.Beans.UserPrincipal;
-import vuln.zsmart.ma.vulnnosql.Securityy.Models.Role;
-import vuln.zsmart.ma.vulnnosql.Securityy.Services.RoleService;
+import vuln.zsmart.ma.vulnnosql.Beans.Role;
+import vuln.zsmart.ma.vulnnosql.Services.RoleService;
 import vuln.zsmart.ma.vulnnosql.Services.MyUserDetailServices;
 
 import java.util.Base64;
@@ -65,26 +65,26 @@ public class RoleController {
         return  "redirect:/role.html";
     }
 
-    @GetMapping("/users.html/security/user/Edit/{id}")
-    public String editUser(@PathVariable ObjectId id, Model model){
-        User user = myUserDetailServices.getUserById(id).get();
+    @GetMapping("/users.html/security/user/Edit/{username}")
+    public String editUser(@PathVariable String username, Model model){
+        User user = myUserDetailServices.findUserByUsername(username);
         model.addAttribute("user", user);
         model.addAttribute("userRoles", roleService.getUserRoles(user));
-        model.addAttribute("userNotRoles", roleService.getUserNotRoles(user.getId()));
+        model.addAttribute("userNotRoles", roleService.getUserNotRoles(user));
         return "userEdit";
     }
 
-    @RequestMapping("/users.html/security/role/assign/{userId}/{roleId}")
-    public String assignRole(@PathVariable ObjectId userId, @PathVariable ObjectId roleId){
-        User user = myUserDetailServices.getUserById(userId).get();
-        roleService.assignUserRole(userId, roleId);
-        return "redirect:/users.html/security/user/Edit/"+userId;
+    @RequestMapping("/users.html/security/role/assign/{username}/{roleId}")
+    public String assignRole(@PathVariable String username, @PathVariable ObjectId roleId){
+        User user = myUserDetailServices.findUserByUsername(username);
+        roleService.assignUserRole(user.getId(), roleId);
+        return "redirect:/users.html/security/user/Edit/"+username;
     }
 
-    @RequestMapping("/users.html/security/role/unassign/{userId}/{roleId}")
-    public String unassignRole(@PathVariable ObjectId userId, @PathVariable ObjectId roleId){
-        User user =myUserDetailServices.getUserById(userId).get();
-        roleService.unassignUserRole(userId, roleId);
-        return "redirect:/users.html/security/user/Edit/"+userId;
+    @RequestMapping("/users.html/security/role/unassign/{username}/{roleId}")
+    public String unassignRole(@PathVariable String username, @PathVariable ObjectId roleId){
+        User user =myUserDetailServices.findUserByUsername(username);
+        roleService.unassignUserRole(user.getId(), roleId);
+        return "redirect:/users.html/security/user/Edit/"+username;
     }
 }
