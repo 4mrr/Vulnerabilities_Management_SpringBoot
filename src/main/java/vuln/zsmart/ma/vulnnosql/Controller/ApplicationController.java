@@ -6,10 +6,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import vuln.zsmart.ma.vulnnosql.Beans.*;
 import vuln.zsmart.ma.vulnnosql.Services.MyUserDetailServices;
+import vuln.zsmart.ma.vulnnosql.Services.PhotoService;
 import vuln.zsmart.ma.vulnnosql.Services.VulnerabilityService;
 
 import java.io.IOException;
@@ -25,6 +27,8 @@ public class ApplicationController {
     VulnerabilityService vulnerabilityService;
     @Autowired
     MyUserDetailServices myUserDetailServices;
+    @Autowired
+    PhotoService photoService;
 
     @GetMapping("/index.html")
     public String getHome(@AuthenticationPrincipal UserPrincipal userPrincipal,Model model)
@@ -68,8 +72,10 @@ public class ApplicationController {
         ObjectId id_u = userPrincipal.getId();
         User user = myUserDetailServices.getUserById(id_u).get();
         Photo photo = user.getPhoto();
-        model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
-
+        if(photo != null)
+        {
+            model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        }
 
         model.addAttribute("platform_java",platform_J);
         model.addAttribute("platform_windows",platform_W);
@@ -100,12 +106,10 @@ public class ApplicationController {
         return "register";
     }
 
-    @PostMapping("/register.html")
-    public RedirectView postRegister(User user , RedirectAttributes redir) throws IOException {
-        Photo photo = new Photo();
-        //ObjectId id_p = myUserDetailServices.addPhotoSansTitle(user.getPhoto());
-        //Photo photo = myUserDetailServices.getPhoto(id_p);
-        photo.setImage(photo.getImage());
+    @PostMapping("/register.html/add-user")
+    public RedirectView postRegister(User user , @RequestParam("image") MultipartFile image,RedirectAttributes redir) throws IOException {
+        ObjectId id_p = myUserDetailServices.addPhotoSansTitle(image);
+        Photo photo = myUserDetailServices.getPhoto(id_p);
         user.setPhoto(photo);
         myUserDetailServices.save(user);
         RedirectView redirectView = new RedirectView("/login.html",true);
@@ -122,7 +126,11 @@ public class ApplicationController {
         ObjectId id_u = userPrincipal.getId();
         User user = myUserDetailServices.getUserById(id_u).get();
         Photo photo = user.getPhoto();
-        model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        if(photo != null)
+        {
+            model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        }
+
         model.addAttribute("user", user);
         return "tables";
     }
@@ -133,7 +141,11 @@ public class ApplicationController {
         ObjectId id_u = userPrincipal.getId();
         User user = myUserDetailServices.getUserById(id_u).get();
         Photo photo = user.getPhoto();
-        model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        if(photo != null)
+        {
+            model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        }
+
         return "AddVuln";
     }
 
@@ -188,7 +200,10 @@ public class ApplicationController {
         ObjectId id_u = userPrincipal.getId();
         User user = myUserDetailServices.getUserById(id_u).get();
         Photo photo = user.getPhoto();
-        model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        if(photo != null)
+        {
+            model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        }
         model.addAttribute("user", user);
         return "platforms";
     }
@@ -199,7 +214,10 @@ public class ApplicationController {
         ObjectId id_u = userPrincipal.getId();
         User user = myUserDetailServices.getUserById(id_u).get();
         Photo photo = user.getPhoto();
-        model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        if(photo != null)
+        {
+            model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        }
         model.addAttribute("user", user);
 
         return "accessDenied";

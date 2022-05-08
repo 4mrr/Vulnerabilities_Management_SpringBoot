@@ -14,11 +14,11 @@
   <title>Access Denied</title>
 
   <!-- Custom fonts for this template-->
-  <link th:href="@{vendor/fontawesome-free/css/all.min.css}" href="../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" href="../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link th:href="@{css/sb-admin-2.min.css}" href="../static/css/sb-admin-2.min.css" rel="stylesheet">
+  <link th:href="@{/css/sb-admin-2.min.css}" href="../static/css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
@@ -327,7 +327,7 @@
         <div class="text-center">
           <div class="error mx-auto" data-text="Access">Access</div>
           <div class="error mx-auto" data-text="Denied">Denied</div>
-          <h3 class="text-gray-500 mb-0" th:text="'Sorry' + ${user.username}+ 'You are Not authorized To edit user data'"></h3>
+          <h3 class="text-gray-500 mb-0" th:text="'Sorry ' + ${user.username}+ ' You are Not authorized To edit user data'"></h3>
           <a href="index.html"  th:href="@{/index.html}" >&larr; Back to Dashboard</a>
         </div>
 
@@ -379,14 +379,14 @@
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<script th:src="@{vendor/jquery/jquery.min.js}" src="../static/vendor/jquery/jquery.min.js" ></script>
-<script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}" src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/vendor/jquery/jquery.min.js}" src="../static/vendor/jquery/jquery.min.js" ></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}" src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
-<script th:src="@{vendor/jquery-easing/jquery.easing.min.js}"  src="../static/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"  src="../static/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="../static/js/sb-admin-2.min.js" th:src="@{js/sb-admin-2.min.js}"  ></script>
+<script src="../static/js/sb-admin-2.min.js" th:src="@{/js/sb-admin-2.min.js}"  ></script>
 
 </body>
 

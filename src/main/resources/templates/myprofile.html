@@ -373,8 +373,10 @@
                   <div class="col-lg-4">
                     <div class="card mb-4">
                       <div class="card-body text-center">
+                        <div th:if="${image != null}">
                         <img th:src="*{'data:image/png;base64,'+image}" alt="avatar"
                              class="rounded-circle img-fluid" style="width: 150px;">
+                        </div>
                         <h5 th:text="${author.getUsername()}" class="my-3">John Smith</h5>
                         <p class="text-muted mb-1" th:text="${author.getSpeciality()}">Full Stack Developer</p>
                         <p class="text-muted mb-4" th:text="${author.getAdress()}">Adress</p>

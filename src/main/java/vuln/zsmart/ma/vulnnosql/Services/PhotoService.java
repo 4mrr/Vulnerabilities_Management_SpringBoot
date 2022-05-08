@@ -22,6 +22,7 @@ public class PhotoService {
         photoDAO.deleteById(id);
     }
 
-
-
+    public void save(Photo photo) {
+        photoDAO.save(photo);
+    }
 }

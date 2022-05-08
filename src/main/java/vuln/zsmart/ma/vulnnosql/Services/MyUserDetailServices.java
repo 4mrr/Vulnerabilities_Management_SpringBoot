@@ -35,7 +35,6 @@ public class MyUserDetailServices implements UserDetailsService {
     public void update(User user)
     {
         userDAO.save(user);
-
     }
 
     public void save(User user)

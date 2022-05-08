@@ -52,7 +52,10 @@ public class UserController {
         List<User> list = myUserDetailServices.getAllUsers();
         model.addAttribute("users",list);
         model.addAttribute("author",user);
-        model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        if(photo != null)
+        {
+            model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        }
         return "userEdit";
     }
 
@@ -62,7 +65,10 @@ public class UserController {
         ObjectId id_u = userPrincipal.getId();
         User user = myUserDetailServices.getUserById(id_u).get();
         Photo photo = user.getPhoto();
-        model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        if(photo != null)
+        {
+            model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        }
         List<User> list = myUserDetailServices.getAllUsers();
         model.addAttribute("users",list);
         model.addAttribute("author",user);
@@ -81,15 +87,6 @@ public class UserController {
             redir.addAttribute("msgAddUser","User Has Been Added Successfully !");
             return  "redirect:/users.html";
     }
-
-/*
-    @RequestMapping("/users.html/findById")
-    @ResponseBody
-    public Optional<User> findById(ObjectId id)
-    {
-         return  myUserDetailServices.getUserById(id);
-    }
-*/
 
     @RequestMapping("/users.html/find")
     @ResponseBody
@@ -234,7 +231,10 @@ public class UserController {
         }
         author.setPhoto(photo);
         myUserDetailServices.save(author);
-        model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        if(photo != null)
+        {
+            model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        }
         return "redirect:/myprofile.html";
     }
 
@@ -271,10 +271,10 @@ public class UserController {
         List<Vulnerbilite> list = user.getVulnerbilites();
         model.addAttribute("vulns",list);
         model.addAttribute("author",user);
-        model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        if(photo != null)
+        {
+            model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        }
         return "myprofile";
     }
-
-
-
 }
