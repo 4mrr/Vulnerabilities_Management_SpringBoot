@@ -10,7 +10,8 @@ public class Role {
     @Id
     private ObjectId id;
     private String description;
-    private  String detail;
+    private String detail;
+
 
     public Role() {
     }

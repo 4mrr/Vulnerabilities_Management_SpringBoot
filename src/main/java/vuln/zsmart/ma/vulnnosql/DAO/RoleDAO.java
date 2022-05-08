@@ -16,4 +16,5 @@ public interface RoleDAO extends MongoRepository<Role, ObjectId> {
     @Query(value = "{'Roles._id' : {$ne : {'Users._id' : ?0 },{'Users.roles.$_id' : 1} }}" )
     public List<Role> getUserNotRoles(ObjectId userId);
 
+    public Role findByDescription(String description);
 }

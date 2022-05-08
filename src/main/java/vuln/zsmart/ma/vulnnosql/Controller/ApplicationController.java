@@ -7,11 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 import vuln.zsmart.ma.vulnnosql.Beans.*;
 import vuln.zsmart.ma.vulnnosql.Services.MyUserDetailServices;
 import vuln.zsmart.ma.vulnnosql.Services.PhotoService;
+import vuln.zsmart.ma.vulnnosql.Services.RoleService;
 import vuln.zsmart.ma.vulnnosql.Services.VulnerabilityService;
 
 import java.io.IOException;
@@ -29,6 +28,8 @@ public class ApplicationController {
     MyUserDetailServices myUserDetailServices;
     @Autowired
     PhotoService photoService;
+    @Autowired
+    RoleService roleService;
 
     @GetMapping("/index.html")
     public String getHome(@AuthenticationPrincipal UserPrincipal userPrincipal,Model model)
@@ -103,20 +104,23 @@ public class ApplicationController {
     @GetMapping("/register.html")
     public String getRegister()
     {
-        return "register";
+      return "register";
     }
 
     @PostMapping("/register.html/add-user")
-    public RedirectView postRegister(User user , @RequestParam("image") MultipartFile image,RedirectAttributes redir) throws IOException {
-        ObjectId id_p = myUserDetailServices.addPhotoSansTitle(image);
+    public String postRegister(User user , @RequestParam("image") MultipartFile img,Model model) throws IOException {
+        ObjectId id_p = myUserDetailServices.addPhotoSansTitle(img);
         Photo photo = myUserDetailServices.getPhoto(id_p);
+        Role role = roleService.getRoleByDescription("USER");
         user.setPhoto(photo);
+        List<Role> list = user.getRoles();
+        list = new ArrayList<>();
+        list.add(role);
+        user.setRoles(list);
         myUserDetailServices.save(user);
-        RedirectView redirectView = new RedirectView("/login.html",true);
-        redir.addFlashAttribute("loginMessage","You Successfully registered! You can now Login");
-        return redirectView;
+        model.addAttribute("loginMessage","You Successfully registered! You can now Login");
+        return "redirect:/login.html";
     }
-
     @GetMapping("/tables.html")
     public String tables(@AuthenticationPrincipal UserPrincipal userPrincipal ,Model model)
     {

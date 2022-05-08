@@ -106,9 +106,11 @@ public class RoleService {
             }
             return result;
         }
+    }
 
-
-
+    public Role getRoleByDescription(String description)
+    {
+        return  roleDAO.findByDescription(description);
     }
 
 }
