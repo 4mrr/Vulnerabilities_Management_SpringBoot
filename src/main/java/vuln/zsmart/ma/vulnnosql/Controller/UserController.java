@@ -53,7 +53,7 @@ public class UserController {
         model.addAttribute("users",list);
         model.addAttribute("author",user);
         model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
-        return "profile";
+        return "userEdit";
     }
 
     @GetMapping("/users.html")

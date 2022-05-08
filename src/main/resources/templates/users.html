@@ -524,6 +524,7 @@
                 <th>Speciality</th>
                 <th>Adress</th>
                 <th>Vulnerability</th>
+                <th></th>
                 <th>Actions</th>
               </tr>
               </thead>
@@ -536,6 +537,7 @@
                 <th>Speciality</th>
                 <th>Adress</th>
                 <th>Vulnerability</th>
+                <th></th>
                 <th>Actions</th>
               </tr>
               </tfoot>
@@ -549,6 +551,9 @@
                 <td th:text="${user.getSpeciality()}"></td>
                 <td th:text="${user.getAdress()}"></td>
                 <td id="number" th:text="${user.getVulnerbilites() == null ? '0': user.getVulnerbilites().size()}" ></td>
+                <td align="center">
+                  <a  th:href="@{'/users.html/security/user/Edit/'+${user.getId()}}" class="btn btn-primary"><i class="icon_pencil-edit"></i>Manage Roles</a>
+                </td>
                 <td align="center">
                   <div class="btn-group">
                     <a  th:href="@{/users.html/find/(username=${user.getUsername()})}" class="samaja-btn" id="editButtom-u"><i class="far fa-edit"></i></a>&nbsp;

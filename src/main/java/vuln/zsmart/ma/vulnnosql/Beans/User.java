@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import vuln.zsmart.ma.vulnnosql.Securityy.Models.Role;
 
 import java.util.List;
 
@@ -27,6 +28,17 @@ public class User{
     public List<Vulnerbilite> vulnerbilites;
     @DBRef(db = "xvuln")
     public SocialMedia socialMedia;
+    @DBRef(db = "xvuln")
+    List<Role> roles;
+
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 
     public SocialMedia getSocialMedia() {
         return socialMedia;

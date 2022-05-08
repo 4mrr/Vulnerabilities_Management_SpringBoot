@@ -328,8 +328,9 @@
               <h5 class="modal-title">Add Photo</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
+
             <div class="modal-body">
-              <form th:action="@{/profile.html/add-photo}" method="post" enctype="multipart/form-data">
+              <form th:action="@{/templates/userEdit.html/add-photo}" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                   <label class="form-label required">Title : <span style="color:#ff0000">*</span></label>
                   <input type="text" class="form-control" name="title"  required>
@@ -359,7 +360,8 @@
 
       <div class="card shadow mb-4">
         <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">My Data</h6>
+<!--          <h6 class="m-0 font-weight-bold text-primary">Time :</h6>-->
+          <h6 class="m-0 font-weight-bold text-primary" th:text="'Current Date : '+ ${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm:ss')}"></h6>
         </div>
         <div class="card-body">
           <div class="table-responsive">

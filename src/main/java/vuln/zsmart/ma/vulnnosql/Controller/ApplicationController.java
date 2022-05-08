@@ -192,4 +192,16 @@ public class ApplicationController {
         model.addAttribute("user", user);
         return "platforms";
     }
+
+    @GetMapping("/accessDenied.html")
+    public String getAccessDenied(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model)
+    {
+        ObjectId id_u = userPrincipal.getId();
+        User user = myUserDetailServices.getUserById(id_u).get();
+        Photo photo = user.getPhoto();
+        model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        model.addAttribute("user", user);
+
+        return "accessDenied";
+    }
 }
