@@ -31,6 +31,11 @@ public class MyUserDetailServices implements UserDetailsService {
     @Autowired
     BCryptPasswordEncoder encoder;
 
+public User getUserByEmail(String email)
+{
+    return userDAO.findByEmail(email);
+}
+
 
     public void update(User user)
     {

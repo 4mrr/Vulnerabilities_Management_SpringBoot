@@ -4,6 +4,7 @@ import net.bytebuddy.utility.RandomString;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -41,6 +42,8 @@ public class UserController {
     JavaMailSender mailSender;
     @Autowired
     RoleService roleService;
+    @Autowired
+    ConfirmationTokenRegistrationService confirmationTokenRegistrationService;
 
     @GetMapping("/profile.html")
     public String tables(@AuthenticationPrincipal UserPrincipal userPrincipal ,Model model)
@@ -77,6 +80,15 @@ public class UserController {
     @PostMapping("/users.html/AddNew")
     public String AddNew(User user, @RequestParam("image") MultipartFile img,Model model)throws IOException
     {
+
+        User testUser = myUserDetailServices.getUserByEmail(user.getEmail());
+
+        if(testUser != null)
+        {
+            model.addAttribute("errorEmail","This Email already exists !");
+        }
+        else
+        {
             ObjectId id_p = myUserDetailServices.addPhotoSansTitle(img);
             Photo photo = myUserDetailServices.getPhoto(id_p);
             Role role = roleService.getRoleByDescription("USER");
@@ -86,8 +98,24 @@ public class UserController {
             list.add(role);
             user.setRoles(list);
             myUserDetailServices.save(user);
+
+            ConfirmationTokenRegistration confirmationToken = new ConfirmationTokenRegistration(user);
+
+            confirmationTokenRegistrationService.save(confirmationToken);
+
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(user.getEmail());
+            mailMessage.setSubject("Complete Registration!");
+            mailMessage.setFrom("support@vuln.com");
+            mailMessage.setText("To confirm your account, please click here : "
+                    +"http://localhost:8082/register.html/confirm-account?token="+confirmationToken.getConfirmationToken());
+
+            confirmationTokenRegistrationService.sendEmaill(mailMessage);
+
+            model.addAttribute("emailId", user.getEmail());;
             model.addAttribute("msgAddUser","User Has Been Added Successfully !");
-            return  "redirect:/users.html";
+        }
+            return  "users";
     }
 
     @RequestMapping("/users.html/find")
@@ -226,7 +254,7 @@ public class UserController {
         return "redirect:/login.html";
     }
 
-    @PostMapping("/profile.html/add-photo")
+    @PostMapping("/myprofile.html/add-photo")
     public String addPhoto(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestParam("title") String title, @RequestParam("image") MultipartFile image, Model model) throws IOException {
 
         ObjectId id_p = myUserDetailServices.addPhoto(title, image);

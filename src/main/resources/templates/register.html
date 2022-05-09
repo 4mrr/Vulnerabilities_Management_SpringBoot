@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -12,6 +11,7 @@
     <meta name="author" content="">
 
     <title>Register</title>
+    <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico" th:href="@{img/favicon.ico}">
 
     <!-- Custom fonts for this template-->
     <link th:href="@{vendor/fontawesome-free/css/all.min.css}" href="../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -37,7 +37,7 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                             </div>
-                            <form class="user" th:action="@{/register.html/add-user}" method="post" enctype="multipart/form-data">
+                            <form class="user" th:action="@{/register.html}" method="post" enctype="multipart/form-data">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="text" class="form-control form-control-user" name="firstName" id="exampleFirstName"
@@ -82,7 +82,7 @@
                                     <input type="password" class="form-control form-control-user" name="confirmPassword" id="exampleInputEmail"
                                            placeholder="Confirm Password" oninput="checkPasswordMatch(this);">
                                 </div>
-                                <button type="submit" th:href="@{/login.html}" class="btn btn-primary btn-user btn-block">
+                                <button type="submit" class="btn btn-primary btn-user btn-block">
                                     Register Account
                                 </button>
                                 <hr>

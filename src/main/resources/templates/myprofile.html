@@ -12,7 +12,7 @@
   <meta name="author" content="">
 
   <title>Profile - Page</title>
-
+  <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico" th:href="@{img/favicon.ico}">
   <link href="../static/css/style.css" th:href="@{css/style.css}" rel="stylesheet" type="text/css">
   <!-- Custom fonts for this template-->
   <link th:href="@{vendor/fontawesome-free/css/all.min.css}" href="../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -330,7 +330,7 @@
             </div>
 
             <div class="modal-body">
-              <form th:action="@{/templates/userEdit.html/add-photo}" method="post" enctype="multipart/form-data">
+              <form th:action="@{myprofile.html/add-photo}" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                   <label class="form-label required">Title : <span style="color:#ff0000">*</span></label>
                   <input type="text" class="form-control" name="title"  required>

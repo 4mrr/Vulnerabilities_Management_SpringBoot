@@ -2,16 +2,14 @@ package vuln.zsmart.ma.vulnnosql.Controller;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import vuln.zsmart.ma.vulnnosql.Beans.*;
-import vuln.zsmart.ma.vulnnosql.Services.MyUserDetailServices;
-import vuln.zsmart.ma.vulnnosql.Services.PhotoService;
-import vuln.zsmart.ma.vulnnosql.Services.RoleService;
-import vuln.zsmart.ma.vulnnosql.Services.VulnerabilityService;
+import vuln.zsmart.ma.vulnnosql.Services.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,6 +28,9 @@ public class ApplicationController {
     PhotoService photoService;
     @Autowired
     RoleService roleService;
+    @Autowired
+    ConfirmationTokenRegistrationService confirmationTokenRegistrationService;
+
 
     @GetMapping("/index.html")
     public String getHome(@AuthenticationPrincipal UserPrincipal userPrincipal,Model model)
@@ -107,20 +108,66 @@ public class ApplicationController {
       return "register";
     }
 
-    @PostMapping("/register.html/add-user")
+    @PostMapping("/register.html")
     public String postRegister(User user , @RequestParam("image") MultipartFile img,Model model) throws IOException {
-        ObjectId id_p = myUserDetailServices.addPhotoSansTitle(img);
-        Photo photo = myUserDetailServices.getPhoto(id_p);
-        Role role = roleService.getRoleByDescription("USER");
-        user.setPhoto(photo);
-        List<Role> list = user.getRoles();
-        list = new ArrayList<>();
-        list.add(role);
-        user.setRoles(list);
-        myUserDetailServices.save(user);
-        model.addAttribute("loginMessage","You Successfully registered! You can now Login");
-        return "redirect:/login.html";
+
+        User testUser = myUserDetailServices.getUserByEmail(user.getEmail());
+
+        if(testUser != null)
+        {
+            model.addAttribute("errorEmail","This Email already exists !");
+
+        }
+        else
+        {
+            ObjectId id_p = myUserDetailServices.addPhotoSansTitle(img);
+            Photo photo = myUserDetailServices.getPhoto(id_p);
+            Role role = roleService.getRoleByDescription("USER");
+            user.setPhoto(photo);
+            List<Role> list = user.getRoles();
+            list = new ArrayList<>();
+            list.add(role);
+            user.setRoles(list);
+            myUserDetailServices.save(user);
+
+            ConfirmationTokenRegistration confirmationToken = new ConfirmationTokenRegistration(user);
+
+            confirmationTokenRegistrationService.save(confirmationToken);
+
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(user.getEmail());
+            mailMessage.setSubject("Complete Registration!");
+            mailMessage.setFrom("support@vuln.com");
+            mailMessage.setText("To confirm your account, please click here : "
+                    +"http://localhost:8082/register.html/confirm-account?token="+confirmationToken.getConfirmationToken());
+
+            confirmationTokenRegistrationService.sendEmaill(mailMessage);
+
+            model.addAttribute("emailId", user.getEmail());
+            model.addAttribute("loginMessage","You Successfully registered! You can now Login");
+        }
+        return "login";
     }
+    @RequestMapping(value="/register.html/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
+    public String confirmUserAccount(Model model, @RequestParam("token")String confirmationToken)
+    {
+        ConfirmationTokenRegistration token = confirmationTokenRegistrationService.getCTR(confirmationToken);
+
+        if(token != null)
+        {
+            User user = myUserDetailServices.getUserByEmail(token.getUser().getEmail());
+            user.setEnabled(true);
+            myUserDetailServices.save(user);
+        }
+        else
+        {
+            model.addAttribute("message","The link is invalid or broken!");
+        }
+
+        return "redirect:/register.html";
+    }
+
+
     @GetMapping("/tables.html")
     public String tables(@AuthenticationPrincipal UserPrincipal userPrincipal ,Model model)
     {

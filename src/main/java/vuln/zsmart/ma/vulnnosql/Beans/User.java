@@ -2,6 +2,7 @@ package vuln.zsmart.ma.vulnnosql.Beans;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,9 +16,12 @@ public class User{
     private ObjectId id;
     private String firstName;
     private String lastName;
+    @Indexed
     private String email;
+    @Indexed
     private String username;
     private String password;
+    private Boolean isEnabled;
     private String speciality;
     private String adress;
     @DBRef(db = "xvuln")
@@ -150,7 +154,13 @@ public class User{
         this.adress = adress;
     }
 
+    public Boolean getEnabled() {
+        return isEnabled;
+    }
 
+    public void setEnabled(Boolean enabled) {
+        isEnabled = enabled;
+    }
 
     @Override
     public String toString() {
