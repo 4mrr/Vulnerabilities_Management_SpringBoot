@@ -65,7 +65,6 @@ public class ApplicationConfiguration extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(bCryptPasswordEncoder());
-        //provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
 }

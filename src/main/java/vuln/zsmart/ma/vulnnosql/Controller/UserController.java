@@ -288,10 +288,7 @@ public class UserController {
         }
         return "myprofile";
     }
-
-
-
-
+    
     @GetMapping("/users.html/view/user/{username}")
     public String viewUser(@PathVariable String username, Model model){
         User user = myUserDetailServices.findUserByUsername(username);

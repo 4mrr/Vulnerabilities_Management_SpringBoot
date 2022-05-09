@@ -547,7 +547,7 @@
                 <td th:utext="${user.getFirstName()}"></td>
                 <td th:text="${user.getLastName()}"></td>
                 <td >
-                  <a th:href="@{'/users.html/view/user/' + ${user.username}}"   th:text="${user.getUsername()}"></a>
+                  <a th:href="@{'/users.html/view/user/' + ${user.getUsername()} }" th:text="${user.getUsername()}"></a>
                 </td>
                 <td th:text="${user.getEmail()}"></td>
                 <td th:text="${user.getSpeciality()}"></td>

@@ -295,6 +295,7 @@
               <span class="mr-2 d-none d-lg-inline text-gray-600 small" sec:authentication="principal.username" >Username</span>
               <img class="img-profile rounded-circle"
                    th:src="*{'data:image/png;base64,'+image}" >
+
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -339,7 +340,7 @@
             <div class="container">
               <div class="picture-resume-wrapper">
                 <div class="picture-resume">
-                  <span><img th:src="*{'data:image/png;base64,'+image}" alt="" /></span>
+                  <span><img th:src="*{authorResume.getPhoto().getImage()}" alt="" /></span>
                   <svg version="1.1" viewBox="0 0 350 350">
 
                     <defs>
@@ -380,74 +381,93 @@
                   <li>First name</li>
                   <li>Last name</li>
                   <li>Email</li>
-                  <li>Region</li>
+                  <li>Speciality</li>
+                  <li>Adress</li>
+                  <li>No of Reports</li>
                 </ul>
                 <ul class="list-content ">
                   <li th:text="${authorResume.getFirstName()}" >fisrtname</li> <!-- YOUR PHONE NUMBER  -->
                   <li th:text="${authorResume.getLastName()}">lastname</li> <!-- YOUR EMAIL -->
                   <li th:text="${authorResume.getEmail()}">email</li> <!-- YOUR WEBSITE  -->
+                  <li th:text="${authorResume.getSpeciality()}">Speciality</li> <!-- YOUR STATE AND COUNTRY  -->
                   <li th:text="${authorResume.getAdress()}">adress</li> <!-- YOUR STATE AND COUNTRY  -->
+                  <li th:text="${authorResume.getVulnerbilites().size()}">vuln</li> <!-- YOUR STATE AND COUNTRY  -->
                 </ul>
               </div>
               <div class="contact-presentation"> <!-- YOUR PRESENTATION RESUME  -->
-                <p><span class="bold">Lorem</span> ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod congue nisi, nec consequat quam. In consectetur faucibus turpis eget laoreet. Sed nec imperdiet purus. </p>
-              </div>
-              <div class="contact-social clearfix">
                 <ul class="list-titles">
                   <li>Twitter</li>
-                  <li>Dribbble</li>
-                  <li>Codepen</li>
+                  <li>Github</li>
+                  <li>Instagram</li>
+                  <li>Facebook</li>
                 </ul>
                 <ul class="list-content"> <!-- REMEMBER TO PUT THE URL ON THE HREF TAG  -->
-                  <li><a href="404.html" th:text="${authorResume.getSocialMedia().getTwitter()}">@janderson</a></li> <!-- YOUR TWITTER USER  -->
-                  <li><a href="404.html" th:text="${authorResume.getSocialMedia().getGithub()}">janderson</a></li> <!-- YOUR DRIBBBLE USER  -->
-                  <li><a href="404.html" th:text="${authorResume.getSocialMedia().getInstagrame()}" >janderson</a></li> <!-- YOUR BEHANCE USER  -->
+                  <li th:text="${authorResume.getSocialMedia().getTwitter()}">@janderson</li> <!-- YOUR TWITTER USER  -->
+                  <li th:text="${authorResume.getSocialMedia().getGithub()}">janderson</li> <!-- YOUR DRIBBBLE USER  -->
+                  <li th:text="${authorResume.getSocialMedia().getInstagrame()}">janderson</li> <!-- YOUR BEHANCE USER  -->
+                  <li th:text="${authorResume.getSocialMedia().getFacebook()}">janderson</li> <!-- YOUR BEHANCE USER  -->
                 </ul>
+              </div>
+              <div class="contact-social clearfix">
+                <p> Hack Or get Hacked</p>
               </div>
             </div>
           </section>
 
           <section class="experience section-padding">
             <div class="container">
-              <h3 class="experience-title">Publication</h3>
+              <h3 class="experience-title">Submissions</h3>
 
-              <div class="experience-wrapper">
+              <div class="experience-wrapper" th:each="vu :${vulnerabilities}">
+
                 <div class="company-wrapper clearfix">
-                  <div class="experience-title">Company name</div> <!-- NAME OF THE COMPANY YOUWORK WITH  -->
-                  <div class="time">Nov 2012 - Present</div> <!-- THE TIME YOU WORK WITH THE COMPANY  -->
+                  <div class="experience-title" th:text="${vu.getPlatform()}">Company name</div>
+                  <div class="time" th:text="${vu.verify}">Nov 2012 - Present</div>
                 </div>
 
                 <div class="job-wrapper clearfix">
-                  <div class="experience-title">Front End Developer </div> <!-- JOB TITLE  -->
+                  <div class="experience-title" th:text="${vu.getTitle()}">Front End Developer </div>
                   <div class="company-description">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a elit facilisis, adipiscing leo in, dignissim magna.</p>  <!-- JOB DESCRIPTION  -->
+                    <p th:text="${vu.getDescription()}"> elit. Fusce a elit facilisis, adipiscing leo in, dignissim magna.</p>
+                  </div>
+                </div>
+              </div>
+                <!--<div class="company-wrapper clearfix">
+                  <div class="experience-title">Company name</div> &lt;!&ndash; NAME OF THE COMPANY YOUWORK WITH  &ndash;&gt;
+                  <div class="time">Nov 2012 - Present</div> &lt;!&ndash; THE TIME YOU WORK WITH THE COMPANY  &ndash;&gt;
+                </div>
+
+                <div class="job-wrapper clearfix">
+                  <div class="experience-title">Front End Developer </div> &lt;!&ndash; JOB TITLE  &ndash;&gt;
+                  <div class="company-description">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a elit facilisis, adipiscing leo in, dignissim magna.</p>  &lt;!&ndash; JOB DESCRIPTION  &ndash;&gt;
                   </div>
                 </div>
 
                 <div class="company-wrapper clearfix">
-                  <div class="experience-title">Company name</div> <!-- NAME OF THE COMPANY YOUWORK WITH  -->
-                  <div class="time">Nov 2010 - Present</div> <!-- THE TIME YOU WORK WITH THE COMPANY  -->
+                  <div class="experience-title">Company name</div> &lt;!&ndash; NAME OF THE COMPANY YOUWORK WITH  &ndash;&gt;
+                  <div class="time">Nov 2010 - Present</div> &lt;!&ndash; THE TIME YOU WORK WITH THE COMPANY  &ndash;&gt;
                 </div>
 
                 <div class="job-wrapper clearfix">
-                  <div class="experience-title">Freelance, Web Designer / Web Developer</div> <!-- JOB TITLE  -->
+                  <div class="experience-title">Freelance, Web Designer / Web Developer</div> &lt;!&ndash; JOB TITLE  &ndash;&gt;
                   <div class="company-description">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a elit facilisis, adipiscing leo in, dignissim magna.</p>  <!-- JOB DESCRIPTION  -->
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a elit facilisis, adipiscing leo in, dignissim magna.</p>  &lt;!&ndash; JOB DESCRIPTION  &ndash;&gt;
                   </div>
                 </div>
 
                 <div class="company-wrapper clearfix">
-                  <div class="experience-title">Company name</div> <!-- NAME OF THE COMPANY YOUWORK WITH  -->
-                  <div class="time">Nov 2009 - Nov 2010</div> <!-- THE TIME YOU WORK WITH THE COMPANY  -->
+                  <div class="experience-title">Company name</div> &lt;!&ndash; NAME OF THE COMPANY YOUWORK WITH  &ndash;&gt;
+                  <div class="time">Nov 2009 - Nov 2010</div> &lt;!&ndash; THE TIME YOU WORK WITH THE COMPANY  &ndash;&gt;
                 </div>
 
                 <div class="job-wrapper clearfix">
-                  <div class="experience-title">Web Designer </div> <!-- JOB TITLE  -->
+                  <div class="experience-title">Web Designer </div> &lt;!&ndash; JOB TITLE  &ndash;&gt;
                   <div class="company-description">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a elit facilisis, adipiscing leo in, dignissim magna.</p>   <!-- JOB DESCRIPTION  -->
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a elit facilisis, adipiscing leo in, dignissim magna.</p>   &lt;!&ndash; JOB DESCRIPTION  &ndash;&gt;
                   </div>
                 </div>
-
+-->
               </div><!--Skill experience-->
 
               <div class="section-wrapper clearfix">
@@ -465,13 +485,25 @@
               </div>
 
               <div class="section-wrapper clearfix">
-                <h3 class="section-title">Hobbies</h3>  <!-- DESCRIPTION OF YOUR HOBBIES -->
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a elit facilisis, adipiscing leo in, dignissim magna.</p>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a elit facilisis, adipiscing leo in, dignissim magna.</p>
+                <h3 class="section-title">Roles</h3>
+                <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                    <th scope="col">Description</th>
+                    <th scope="col">Detail</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="rol : ${userRoles}">
+                    <td th:text="${rol.description}"></td>
+                    <td th:text="${rol.detail}"></td>
+                  </tr>
+                  </tbody>
+                </table>
               </div>
-
+          </section>
             </div>
+
           </section>
 
           <div class="clearfix"></div>
@@ -486,13 +518,7 @@
     <!-- End of Main Content -->
 
     <!-- Footer -->
-    <footer class="sticky-footer bg-white">
-      <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-          <span>Copyright &copy; Amr En-niari 2022</span>
-        </div>
-      </div>
-    </footer>
+
     <!-- End of Footer -->
 
   </div>
@@ -502,6 +528,13 @@
 <!-- End of Page Wrapper -->
 
 <!-- Scroll to Top Button-->
+<footer class="sticky-footer bg-white">
+  <div class="container my-auto">
+    <div class="copyright text-center my-auto">
+      <span>Copyright &copy; Amr En-niari 2022</span>
+    </div>
+  </div>
+</footer>
 <a class="scroll-to-top rounded" href="#page-top">
   <i class="fas fa-angle-up"></i>
 </a>
