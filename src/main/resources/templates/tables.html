@@ -492,7 +492,7 @@
 
                                         <tr th:each="vulnn : ${vulns}">
                                             <td>
-                                                <a th:href="@{/resume.html/{username}(username=${user.username})}" th:text="${vulnn.author.username}"></a>
+                                                <a th:href="@{'/tables.html/view/user/' + ${vulnn.author.username}}" th:text="${vulnn.author.username}"></a>
                                             </td>
                                             <td th:text="${vulnn.title}"></td>
                                             <td th:text="${vulnn.platform}"></td>

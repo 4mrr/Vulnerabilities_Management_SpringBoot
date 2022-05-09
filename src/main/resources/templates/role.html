@@ -482,14 +482,14 @@
                             <tbody>
 
                             <tr th:each="role : ${roles}">
-                                <td th:text="${role.getId()}"></td>
+                                <td th:text="${role.id}"></td>
                                 <td th:text="${role.getDescription()}"></td>
                                 <td th:text="${role.getDetail()}"></td>
                                 <td align="center">
                                     <div class="btn-group">
-                                        <button type="button" th:href="@{/role.html/findById/(id=${role.getId()})}" class="samaja-btn" id="editButtom"><i class="far fa-edit"></i></button>&nbsp;
-                                        <button type="button" th:href="@{/role.html/delete/(id=${role.getId()})}" class="samaja-btn" id="deleteButtom"><i class="far fa-times-circle"></i></button>&nbsp;
-                                        <button type="button" th:href="@{/role.html/findById/(id=${role.getId()})}" class="samaja-btn" id="detailsButton"><i class="far fa-list-alt"></i></button>
+                                        <button type="button" th:href="@{/role.html/findDesc/(description=${role.getDescription()})}" class="samaja-btn" id="editButtom"><i class="far fa-edit"></i></button>&nbsp;
+                                        <button type="button" th:href="@{/role.html/delete/(description=${role.getDescription()})}" class="samaja-btn" id="deleteButtom"><i class="far fa-times-circle"></i></button>&nbsp;
+                                        <button type="button" th:href="@{/role.html/findDesc/(description=${role.getDescription()})}" class="samaja-btn" id="detailsButton"><i class="far fa-list-alt"></i></button>
                                     </div>
                                 </td>
                             </tr>

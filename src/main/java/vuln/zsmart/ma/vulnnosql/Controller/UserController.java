@@ -98,8 +98,15 @@ public class UserController {
     }
 
    @GetMapping("/resume.html")
-    public String getttresume()
+    public String getttresume(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model)
     {
+        ObjectId id = userPrincipal.getId();
+        User user = myUserDetailServices.getUserById(id).get();
+        Photo photo = user.getPhoto();
+        if(photo != null)
+        {
+            model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        }
         return "resume";
     }
 
@@ -281,4 +288,17 @@ public class UserController {
         }
         return "myprofile";
     }
+
+
+
+
+    @GetMapping("/users.html/view/user/{username}")
+    public String viewUser(@PathVariable String username, Model model){
+        User user = myUserDetailServices.findUserByUsername(username);
+        model.addAttribute("authorResume", user);
+        model.addAttribute("userRoles", roleService.getUserRoles(user));
+        model.addAttribute("vulnerabilities", user.getVulnerbilites());
+        return "resume";
+    }
+
 }

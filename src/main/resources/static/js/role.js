@@ -1,6 +1,6 @@
 $('document').ready(function()
 {
-    $('#editButtom').on('click',function(event)
+    $('.table #editButtom').on('click',function(event)
     {
         event.preventDefault();
 
@@ -14,7 +14,7 @@ $('document').ready(function()
         $('#editModal').modal('show');
     })
 
-    $('#deleteButtom').on('click',function(event)
+    $('.table #deleteButtom').on('click',function(event)
     {
         event.preventDefault();
         var href = $(this).attr('href');
@@ -22,7 +22,7 @@ $('document').ready(function()
         $('#deleteModal').modal('show');
     });
 
-    $('#detailsButton').on('click',function(event)
+    $('.table #detailsButton').on('click',function(event)
     {
         event.preventDefault();
 
@@ -31,7 +31,7 @@ $('document').ready(function()
         $.get(href, function(role, status){
             $('#detailsId').val(role.id);
             $('#detailsDescription').val(role.description);
-            $('#detailsDetail').val(vulnn.detail);
+            $('#detailsDetail').val(role.detail);
         });
         $('#detailsModal').modal('show');
     });

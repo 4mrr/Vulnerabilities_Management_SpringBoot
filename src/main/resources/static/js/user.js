@@ -1,6 +1,6 @@
 $('document').ready(function()
 {
-    $('#editButtom-u').on('click',function(event)
+    $('.table #editButtom').on('click',function(event)
     {
         event.preventDefault();
         var href = $(this).attr('href');
@@ -15,11 +15,11 @@ $('document').ready(function()
             $('#editPassword').val(user.password);
         });
 
-        $('#editModal-u').modal('show');
+        $('#editModal').modal('show');
     })
 
 
-    $('#deleteButtom-u').on('click',function(event)
+    $('.table #deleteButtom').on('click',function(event)
     {
         event.preventDefault();
         var href = $(this).attr('href');
@@ -28,7 +28,7 @@ $('document').ready(function()
 
     });
 
-    $('#detailsButton-u').on('click',function(event)
+    $('.table #detailsButton').on('click',function(event)
     {
         event.preventDefault();
 
@@ -41,9 +41,8 @@ $('document').ready(function()
             $('#detailsAdress').val(user.adress);
             $('#detailsEmail').val(user.email);
             $('#detailsPassword').val(user.password);
-
         });
-        $('#detailsModal-u').modal('show');
+        $('#detailsModal').modal('show');
     });
 
 });

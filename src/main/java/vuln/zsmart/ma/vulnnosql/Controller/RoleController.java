@@ -45,9 +45,17 @@ public class RoleController {
         return  roleService.getById(id);
     }
 
+    @RequestMapping("/role.html/findDesc")
+    @ResponseBody
+    public Role findByDesc(String description)
+    {
+        return roleService.getRoleByDescription(description);
+    }
+
     @RequestMapping(value="/role.html/delete", method = {RequestMethod.DELETE, RequestMethod.GET})
-    public String delete(ObjectId id) {
-        roleService.deleteById(id);
+    public String delete(String description) {
+        Role role =  roleService.getRoleByDescription(description);
+        roleService.deleteById(role.getId());
         return "redirect:/role.html";
     }
 
@@ -58,7 +66,7 @@ public class RoleController {
         return  "redirect:/role.html";
     }
 
-    @RequestMapping(value="/role.html/delete", method = {RequestMethod.PUT, RequestMethod.GET})
+    @RequestMapping(value="/role.html/update", method = {RequestMethod.PUT, RequestMethod.GET})
     public String update(Role role)
     {
         roleService.save(role);
