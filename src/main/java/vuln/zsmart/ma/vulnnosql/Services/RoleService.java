@@ -54,35 +54,8 @@ public class RoleService {
     }
 
     public List<Role> getUserRoles(User user){
-        if (user.getRoles()== null)
-        {
-            return new ArrayList<Role>();
-        }
         return user.getRoles();
     }
-
-/*    public List<Role> getUserNotRoles(ObjectId userId)
-    {
-        User user =  userDAO.findById(userId).get();
-        List<Role> listRoles = roleDAO.findAll();
-        List<Role> newList = new ArrayList<Role>();
-
-        if(user.getRoles()== null)
-        {
-            return listRoles;
-        }
-        else
-        {
-            for (Role role: listRoles)
-            {
-                if(!user.getRoles().contains(role))
-                {
-                    newList.add(role);
-                }
-            }
-            return newList;
-        }
-    }*/
 
     public List<Role> getUserNotRoles(ObjectId id)
     {
@@ -93,13 +66,14 @@ public class RoleService {
     {
         List<Role> result = new ArrayList<Role>();
         List<Role> AllRoles=  roleDAO.findAll();
-        if(user.getRoles().isEmpty())
+        if(user.getRoles()== null)
         {
             return AllRoles;
+
         }else{
             for(int i=0; i< AllRoles.size();i++)
             {
-                if(user.getRoles().get(i).getId() != (AllRoles.get(i).getId()))
+                if(!user.getRoles().contains(AllRoles.get(i)))
                 {
                         result.add(AllRoles.get(i));
                 }

@@ -412,12 +412,13 @@
           <section class="experience section-padding">
             <div class="container">
               <h3 class="experience-title">Submissions</h3>
-
               <div class="experience-wrapper" th:each="vu :${vulnerabilities}">
 
                 <div class="company-wrapper clearfix">
-                  <div class="experience-title" th:text="${vu.getPlatform()}">Company name</div>
-                  <div class="time" th:text="${vu.verify}">Nov 2012 - Present</div>
+                  <div class="experience-title">
+                    <a th:href="@{'/resume.html/' + ${vu.getTitle()}}" th:text="${vu.getPlatform()}"  class="btn btn-primary" ></a>
+                  </div>
+                  <div class="time" th:text="${vu.date}">Nov 2012 - Present</div>
                 </div>
 
                 <div class="job-wrapper clearfix">
@@ -426,54 +427,19 @@
                     <p th:text="${vu.getDescription()}"> elit. Fusce a elit facilisis, adipiscing leo in, dignissim magna.</p>
                   </div>
                 </div>
-              </div>
-                <!--<div class="company-wrapper clearfix">
-                  <div class="experience-title">Company name</div> &lt;!&ndash; NAME OF THE COMPANY YOUWORK WITH  &ndash;&gt;
-                  <div class="time">Nov 2012 - Present</div> &lt;!&ndash; THE TIME YOU WORK WITH THE COMPANY  &ndash;&gt;
-                </div>
-
-                <div class="job-wrapper clearfix">
-                  <div class="experience-title">Front End Developer </div> &lt;!&ndash; JOB TITLE  &ndash;&gt;
-                  <div class="company-description">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a elit facilisis, adipiscing leo in, dignissim magna.</p>  &lt;!&ndash; JOB DESCRIPTION  &ndash;&gt;
-                  </div>
-                </div>
-
-                <div class="company-wrapper clearfix">
-                  <div class="experience-title">Company name</div> &lt;!&ndash; NAME OF THE COMPANY YOUWORK WITH  &ndash;&gt;
-                  <div class="time">Nov 2010 - Present</div> &lt;!&ndash; THE TIME YOU WORK WITH THE COMPANY  &ndash;&gt;
-                </div>
-
-                <div class="job-wrapper clearfix">
-                  <div class="experience-title">Freelance, Web Designer / Web Developer</div> &lt;!&ndash; JOB TITLE  &ndash;&gt;
-                  <div class="company-description">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a elit facilisis, adipiscing leo in, dignissim magna.</p>  &lt;!&ndash; JOB DESCRIPTION  &ndash;&gt;
-                  </div>
-                </div>
-
-                <div class="company-wrapper clearfix">
-                  <div class="experience-title">Company name</div> &lt;!&ndash; NAME OF THE COMPANY YOUWORK WITH  &ndash;&gt;
-                  <div class="time">Nov 2009 - Nov 2010</div> &lt;!&ndash; THE TIME YOU WORK WITH THE COMPANY  &ndash;&gt;
-                </div>
-
-                <div class="job-wrapper clearfix">
-                  <div class="experience-title">Web Designer </div> &lt;!&ndash; JOB TITLE  &ndash;&gt;
-                  <div class="company-description">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a elit facilisis, adipiscing leo in, dignissim magna.</p>   &lt;!&ndash; JOB DESCRIPTION  &ndash;&gt;
-                  </div>
-                </div>
--->
+            </div>
               </div><!--Skill experience-->
 
               <div class="section-wrapper clearfix">
-                <h3 class="section-title">Skills</h3>  <!-- YOUR SET OF SKILLS  -->
+                <h3 class="section-title">Platforms</h3>  <!-- YOUR SET OF SKILLS  -->
                 <ul>
-                  <li class="skill-percentage">HTML / HTML5</li>
-                  <li class="skill-percentage">CSS / CSS3 / SASS / LESS</li>
-                  <li class="skill-percentage">Javascript</li>
-                  <li class="skill-percentage">Jquery</li>
-                  <li class="skill-percentage">Wordpress</li>
-                  <li class="skill-percentage">Photoshop</li>
+                  <li class="skill-percentage">Linux</li>
+                  <li class="skill-percentage">Windows</li>
+                  <li class="skill-percentage">Android</li>
+                  <li class="skill-percentage">IOS</li>
+                  <li class="skill-percentage">Hardware</li>
+                  <li class="skill-percentage">JAVA</li>
+                  <li class="skill-percentage">PHP</li>
 
                 </ul>
 
@@ -553,6 +519,7 @@
     </div>
   </div>
 </div>
+
 
 <!-- Bootstrap core JavaScript-->
 <script src="../static/vendor/jquery/jquery.min.js" th:src="@{/vendor/jquery/jquery.min.js}"  type="text/javascript"></script>

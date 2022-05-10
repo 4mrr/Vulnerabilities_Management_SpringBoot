@@ -13,6 +13,7 @@ import vuln.zsmart.ma.vulnnosql.Beans.Role;
 import vuln.zsmart.ma.vulnnosql.Services.RoleService;
 import vuln.zsmart.ma.vulnnosql.Services.MyUserDetailServices;
 
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
@@ -76,9 +77,16 @@ public class RoleController {
     @GetMapping("/users.html/security/user/Edit/{username}")
     public String editUser(@PathVariable String username, Model model){
         User user = myUserDetailServices.findUserByUsername(username);
+        if(roleService.getUserRoles(user) == null)
+        {
+            model.addAttribute("userRoles", new ArrayList<Role>());
+
+        }else
+        {
+            model.addAttribute("userRoles", roleService.getUserRoles(user));
+            model.addAttribute("userNotRoles", roleService.getUserNotRoles(user));
+        }
         model.addAttribute("user", user);
-        model.addAttribute("userRoles", roleService.getUserRoles(user));
-        model.addAttribute("userNotRoles", roleService.getUserNotRoles(user));
         return "userEdit";
     }
 

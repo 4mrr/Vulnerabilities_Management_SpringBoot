@@ -318,12 +318,41 @@ public class UserController {
     }
     
     @GetMapping("/users.html/view/user/{username}")
-    public String viewUser(@PathVariable String username, Model model){
+    public String viewUser(@AuthenticationPrincipal UserPrincipal userPrincipal,@PathVariable String username, Model model){
         User user = myUserDetailServices.findUserByUsername(username);
+        ObjectId id= userPrincipal.getId();
+        User pricipale = myUserDetailServices.getUserById(id).get();
+        model.addAttribute("principal",pricipale);
+        Photo photo = pricipale.getPhoto();
+        if(photo != null)
+        {
+            model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        }
+
+
         model.addAttribute("authorResume", user);
         model.addAttribute("userRoles", roleService.getUserRoles(user));
         model.addAttribute("vulnerabilities", user.getVulnerbilites());
         return "resume";
+    }
+
+    @GetMapping("/resume.html/{title}")
+    public String getExploit(@AuthenticationPrincipal UserPrincipal userPrincipal,@PathVariable String title,Model model)
+    {
+        Vulnerbilite vulnerbilite = vulnerabilityService.getVulnByTitle(title);
+        ObjectId id= userPrincipal.getId();
+        User pricipale = myUserDetailServices.getUserById(id).get();
+
+        model.addAttribute("principal",pricipale);
+        model.addAttribute("vulnerbilite",vulnerbilite);
+        Photo photo = pricipale.getPhoto();
+        if(photo != null)
+        {
+            model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        }
+
+
+        return "exploit";
     }
 
 }

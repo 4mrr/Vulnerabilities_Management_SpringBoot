@@ -86,16 +86,21 @@ public class User{
         this.vulnerbilites = vulnerbilites;
     }
 
-    public User(ObjectId id, String firstName, String lastName, String email, String username, String password, String adress, String token, List<Vulnerbilite> vulnerbilites) {
+    public User(ObjectId id, String firstName, String lastName, String email, String username, String password, Boolean isEnabled, String speciality, String adress, Photo photo, String token, List<Vulnerbilite> vulnerbilites, SocialMedia socialMedia, List<Role> roles) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.username = username;
         this.password = password;
+        this.isEnabled = isEnabled;
+        this.speciality = speciality;
         this.adress = adress;
+        this.photo = photo;
         this.token = token;
         this.vulnerbilites = vulnerbilites;
+        this.socialMedia = socialMedia;
+        this.roles = roles;
     }
 
     public ObjectId getId() {
