@@ -22,6 +22,7 @@
 
     <!-- Custom styles for this template-->
     <link th:href="@{css/sb-admin-2.min.css}" href="../static/css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/css/platforms.css" th:href="@{css/platforms.css}" >
 
 </head>
 
@@ -451,7 +452,7 @@
                                         <canvas id="myAreaChart"></canvas>
                                     </div>-->
 
-                                    <table class="table table-dark table-striped">
+                                    <!--<table class="table table-dark table-striped">
                                         <thead>
                                         <tr>
                                             <th scope="col">Platform</th>
@@ -466,7 +467,31 @@
                                             <td >2</td>
                                         </tr>
                                         </tbody>
-                                    </table>
+                                    </table>-->
+                                    <div class="table-responsive">
+
+                                        <div class="slides slowFade">
+                                            <div class="slide">
+                                                <img src="../static/platforms/ios-android.png" th:src="@{platforms/ios-android.png}" alt="img"/>
+                                            </div>
+                                            <div class="slide">
+                                                <img src="../static/platforms/hardware.png" th:src="@{platforms/hardware.png}" alt="img"/>
+                                            </div>
+                                            <div class="slide">
+                                                <img src="../static/platforms/java.jpg" th:src="@{platforms/java.jpg}" alt="img"/>
+                                            </div>
+                                            <div class="slide">
+                                                <img src="../static/platforms/linux.png" th:src="@{platforms/linux.png}" alt="img"/>
+                                            </div>
+                                            <div class="slide">
+                                                <img src="../static/platforms/Microsoft_Windows_11.jpg" th:src="@{platforms/Microsoft_Windows_11.jpg}" alt="img"/>
+                                            </div>
+                                            <div class="slide">
+                                                <img src="../static/platforms/php.jpg" th:src="@{platforms/php.jpg}" alt="img"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -752,6 +777,7 @@
     <!-- Page level custom scripts -->
     <!--<script src="../static/js/demo/chart-area-demo.js" th:src="@{js/demo/chart-area-demo.js}"></script>-->
     <script src="../static/js/demo/chart-pie-demo.js" th:src="@{js/demo/chart-pie-demo.js}"></script>
+
 
 </body>
 

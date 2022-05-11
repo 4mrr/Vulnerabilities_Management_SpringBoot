@@ -297,8 +297,6 @@ public class UserController {
         return "redirect:/logout";
     }
 
-
-
     @GetMapping("/myprofile.html")
     public String myprofile(@AuthenticationPrincipal UserPrincipal userPrincipal ,Model model)
     {
@@ -328,8 +326,6 @@ public class UserController {
         {
             model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
         }
-
-
         model.addAttribute("authorResume", user);
         model.addAttribute("userRoles", roleService.getUserRoles(user));
         model.addAttribute("vulnerabilities", user.getVulnerbilites());
