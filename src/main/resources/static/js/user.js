@@ -1,6 +1,6 @@
 $('document').ready(function()
 {
-    $('.table #editButtom').on('click',function(event)
+    $('#editButtom').on('click',function(event)
     {
         event.preventDefault();
         var href = $(this).attr('href');
@@ -19,30 +19,13 @@ $('document').ready(function()
     })
 
 
-    $('.table #deleteButtom').on('click',function(event)
+    $('#deleteButtom').on('click',function(event)
     {
         event.preventDefault();
         var href = $(this).attr('href');
         $('#confirmDeleteButtom').attr('href',href);
         $('#deleteModal').modal('show');
 
-    });
-
-    $('.table #detailsButton').on('click',function(event)
-    {
-        event.preventDefault();
-
-        var href= $(this).attr('href');
-            $.get(href, function(user, status){
-            $('#detailsFirstName').val(user.firstName);
-            $('#detailsLastName').val(user.lastName);
-            $('#detailsUsername').val(user.username);
-            $('#detailsSpeciality').val(user.speciality);
-            $('#detailsAdress').val(user.adress);
-            $('#detailsEmail').val(user.email);
-            $('#detailsPassword').val(user.password);
-        });
-        $('#detailsModal').modal('show');
     });
 
 });

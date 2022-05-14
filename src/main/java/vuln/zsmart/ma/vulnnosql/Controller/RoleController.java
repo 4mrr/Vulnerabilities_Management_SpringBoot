@@ -34,7 +34,10 @@ public class RoleController {
         User user = myUserDetailServices.getUserById(id).get();
         Photo photo = user.getPhoto();
         List<Role> listRole = roleService.getAll();
-        model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        if(photo!=null)
+        {
+            model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        }
         model.addAttribute("roles", listRole);
 
         return "role";
@@ -80,7 +83,6 @@ public class RoleController {
         if(roleService.getUserRoles(user) == null)
         {
             model.addAttribute("userRoles", new ArrayList<Role>());
-
         }else
         {
             model.addAttribute("userRoles", roleService.getUserRoles(user));

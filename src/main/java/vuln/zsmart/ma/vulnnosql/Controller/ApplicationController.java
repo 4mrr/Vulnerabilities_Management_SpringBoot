@@ -230,12 +230,12 @@ public class ApplicationController {
     {
         return vulnerabilityService.getVulnByTitle(title);
     }
-
+/*
     @RequestMapping(value="/tables.html/update", method = {RequestMethod.PUT, RequestMethod.GET})
     public String update(Vulnerbilite vulnerbilite) {
         vulnerabilityService.save(vulnerbilite);
         return "redirect:/tables.html";
-    }
+    }*/
     @RequestMapping(value="/tables.html/delete", method = {RequestMethod.DELETE, RequestMethod.GET})
     public String delete(String title) {
         Vulnerbilite vulnerbilite = vulnerabilityService.getVulnByTitle(title);

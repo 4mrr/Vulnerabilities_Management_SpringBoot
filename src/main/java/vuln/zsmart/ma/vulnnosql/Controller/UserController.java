@@ -125,6 +125,13 @@ public class UserController {
         return myUserDetailServices.findUserByUsername(username);
     }
 
+    @RequestMapping("/users.html/id")
+    @ResponseBody
+    public Optional<User> findById(ObjectId id)
+    {
+        return myUserDetailServices.getUserById(id);
+    }
+
    @GetMapping("/resume.html")
     public String getttresume(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model)
     {
@@ -138,9 +145,10 @@ public class UserController {
         return "resume";
     }
 
-    @RequestMapping(value="/users.html/update", method = {RequestMethod.PUT, RequestMethod.GET})
+    @PutMapping(value="/users.html/update")
     public String update(User user) {
-        myUserDetailServices.save(user);
+        User test = myUserDetailServices.getUserById(user.getId()).get();
+        myUserDetailServices.save(test);
         return "redirect:/users.html";
     }
 
@@ -151,7 +159,7 @@ public class UserController {
         socialMedia.setUserProfie(user);
         user.setSocialMedia(socialMedia);
         socialMediaService.save(socialMedia);
-        myUserDetailServices.update(user);
+        myUserDetailServices.save(user);
         return "redirect:/users.html";
     }
 
@@ -168,6 +176,42 @@ public class UserController {
         myUserDetailServices.deleteUserById(user.getId());
         return "redirect:/users.html";
     }
+    @RequestMapping(value="/users.html/delete/id", method = {RequestMethod.DELETE, RequestMethod.GET})
+    public String delete(ObjectId id) {
+        User user = myUserDetailServices.getUserById(id).get();
+        Photo photo = user.getPhoto();
+        List<Vulnerbilite> vulnerbilites = user.getVulnerbilites();
+        for (Vulnerbilite vulnerbilite : vulnerbilites)
+        {
+            vulnerabilityService.deleteVulnById(vulnerbilite.getId());
+        }
+        photoService.deletePhotoById(photo.getId());
+        myUserDetailServices.deleteUserById(user.getId());
+        return "redirect:/users.html";
+    }
+
+
+    @GetMapping("/usersUpdate.html")
+    public String getpage(@AuthenticationPrincipal UserPrincipal userPrincipal, Model model)
+    {
+        ObjectId id  = userPrincipal.getId();
+        User user = myUserDetailServices.getUserById(id).get();
+        Photo photo = user.getPhoto();
+        if(photo != null)
+        {
+            model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        }
+        return "usersUpdate";
+    }
+
+    @GetMapping("/users.html/update/{username}")
+    public String geTupdate(@PathVariable String username, Model model)
+    {
+        User user = myUserDetailServices.findUserByUsername(username);
+        model.addAttribute("userEDIT",user);
+        return "usersUpdate";
+    }
+
 
     @GetMapping("/forgot-password.html")
     public String showForgotPasswordForm() {

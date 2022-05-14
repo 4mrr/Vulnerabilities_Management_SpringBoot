@@ -36,11 +36,11 @@ public User getUserByEmail(String email)
     return userDAO.findByEmail(email);
 }
 
-
+/*
     public void update(User user)
     {
         userDAO.save(user);
-    }
+    }*/
 
     public void save(User user)
     {
