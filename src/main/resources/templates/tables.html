@@ -368,6 +368,7 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th>ID</th>
                                             <th>Author</th>
                                             <th>Title</th>
                                             <th>Platform</th>
@@ -379,6 +380,7 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>ID</th>
                                             <th>Author</th>
                                             <th>Title</th>
                                             <th>Platform</th>
@@ -391,6 +393,7 @@
                                     <tbody>
 
                                         <tr th:each="vulnn : ${vulns}">
+                                            <td th:text="${vulnn.id}"></td>
                                             <td>
                                                 <a th:href="@{'/tables.html/view/user/' + ${vulnn.author.username}}" th:text="${vulnn.author.username}"></a>
                                             </td>
@@ -403,7 +406,6 @@
                                                 <div class="btn-group">
                                                 <a  th:href="@{'/tables.html/vulnerability/edit/' + ${vulnn.title}}" class="samaja-btn" ><i class="far fa-edit"></i></a>&nbsp;
                                                 <a  th:href="@{/tables.html/delete/(title=${vulnn.title})}" class="samaja-btn" id="deleteButtom-v"><i class="far fa-times-circle"></i></a>&nbsp;
-                                                <a  th:href="@{'/tables.html/view/details/'+${vulnn.title}}" class="samaja-btn" ><i class="far fa-list-alt"></i></a>
                                                 </div>
                                             </td>
                                         </tr>

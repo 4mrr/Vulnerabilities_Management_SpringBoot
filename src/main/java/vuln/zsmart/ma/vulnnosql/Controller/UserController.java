@@ -22,10 +22,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class UserController {
@@ -144,12 +141,49 @@ public class UserController {
         }
         return "resume";
     }
+    @GetMapping("/users.html/update/byUsername/{username}")
+    public String doudou(@AuthenticationPrincipal UserPrincipal userPrincipal,@PathVariable String username, Model model)
+    {
+        ObjectId id = userPrincipal.getId();
+        User user1 = myUserDetailServices.getUserById(id).get();
+        User user = myUserDetailServices.findUserByUsername(username);
+        Photo photo = user1.getPhoto();
+        if(photo!=null)
+        {
+            model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+        }
+        model.addAttribute("userEDIT",user);
+        return "usersUpdate";
+    }
 
-    @PutMapping(value="/users.html/update")
+
+    @RequestMapping(value="/users.html/testEdit/update")
     public String update(User user) {
-        User test = myUserDetailServices.getUserById(user.getId()).get();
-        myUserDetailServices.save(test);
-        return "redirect:/users.html";
+
+        Optional<User> user1 = myUserDetailServices.getUserById(user.getId());
+        if (user1.isPresent())
+        {
+            User _user = user1.get();
+            _user.setFirstName(user.getFirstName());
+            _user.setLastName(user.getLastName());
+            _user.setUsername(user.getUsername());
+            _user.setAdress(user.getAdress());
+            _user.setEmail(user.getEmail());
+            _user.setToken(user.getToken());
+            _user.setVulnerbilites(user.getVulnerbilites());
+            _user.setRoles(user.getRoles());
+            _user.setPassword(user.getPassword());
+            _user.setPhoto(user.getPhoto());
+            _user.setSocialMedia(user.getSocialMedia());
+            _user.setEnabled(user.getEnabled());
+            myUserDetailServices.save(_user);
+
+            return "redirect:/users.html/update/byUsername/"+_user.getUsername();
+        }else
+        {
+            return "users";
+        }
+
     }
 
     @RequestMapping(value="/users.html/updateSocialMedia", method = {RequestMethod.PUT, RequestMethod.GET})
@@ -201,14 +235,6 @@ public class UserController {
         {
             model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
         }
-        return "usersUpdate";
-    }
-
-    @GetMapping("/users.html/update/{username}")
-    public String geTupdate(@PathVariable String username, Model model)
-    {
-        User user = myUserDetailServices.findUserByUsername(username);
-        model.addAttribute("userEDIT",user);
         return "usersUpdate";
     }
 

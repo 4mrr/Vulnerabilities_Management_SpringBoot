@@ -460,6 +460,7 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
               <tr>
+                <th>ID</th>
                 <th>First name</th>
                 <th>Last name</th>
                 <th>Username</th>
@@ -473,6 +474,7 @@
               </thead>
               <tfoot>
               <tr>
+                <th>ID</th>
                 <th>First name</th>
                 <th>Last name</th>
                 <th>Username</th>
@@ -487,6 +489,7 @@
               <tbody>
 
               <tr th:each="user : ${users}">
+                <td th:utext="${user.getId()}"></td>
                 <td th:utext="${user.getFirstName()}"></td>
                 <td th:text="${user.getLastName()}"></td>
                 <td >
@@ -501,7 +504,7 @@
                 </td>
                 <td align="center">
                   <div class="btn-group">
-                    <a  th:href="@{'/users.html/update/'+${user.username}}" class="samaja-btn" ><i class="far fa-edit"></i></a>&nbsp;
+                    <a  th:href="@{'/users.html/update/byUsername/'+${user.username}}" class="samaja-btn" ><i class="far fa-edit"></i></a>&nbsp;
                     <a  th:href="@{/users.html/delete/id/(id=${user.id})}" class="samaja-btn" id="deleteButtom"><i class="far fa-times-circle"></i></a>&nbsp;
                   </div>
                 </td>
