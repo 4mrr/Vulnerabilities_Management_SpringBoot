@@ -322,13 +322,15 @@
 
                 <!-- Page Heading -->
                 <h1 class="h3 mb-4 text-gray-800" th:text="'Here You can Edit '+${vulnEDIT.title}">Here You can Add </h1>
-                <form class="user" id="txt" th:action="@{/tables.html/update/vuln}"  method="put">
+                <form class="user" th:action="@{/tables.html/update/vuln}"  method="put">
                     <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
+                            <label  class="col-form-label">Title :</label>
                             <input type="text" class="form-control form-control-user" id="exampleFirstName"
                                    name="title" th:value="${vulnEDIT.title}">
                         </div>
                         <div class="col-sm-6">
+                            <label  class="col-form-label">Platform :</label>
                             <select name="platform" class="form-control " id="exampleLastName">
                                 <option value="none" selected  hidden >Select a Platform</option>
                                 <option value="Linux">Linux</option>
@@ -343,20 +345,24 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
+                            <label  class="col-form-label">Date :</label>
                             <input type="text" class="form-control form-control-user" id="exampleFirstName"
                                    name="date" th:value="${vulnEDIT.date}" >
                         </div>
                         <div class="col-sm-6">
+                            <label  class="col-form-label">Description :</label>
                             <input type="text" class="form-control form-control-user" id="exampleLastName"
                                    name="description" th:value="${vulnEDIT.description}"  placeholder="Description">
                         </div>
                     </div>
 
                     <div class="form-group">
+                        <label  class="col-form-label">Verifying :</label>
                         <input type="text" class="form-control form-control-user" id="exampleInputEmail"
-                               name="verify" th:value="${vulnEDIT.verify}"   >
+                               name="verify" th:value="${vulnEDIT.verify}">
                     </div>
                     <div class="form-group">
+                        <label  class="col-form-label">Exploit :</label>
                         <textarea  class="form-control " th:value="${vulnEDIT.exploit}" form="txt" name="exploit" cols="50" rows="10"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary btn-user btn-block" >Save</button>
@@ -368,7 +374,6 @@
                         <i class="fab  fa-fw"></i>View All Submissions
                     </a>
                 </form>
-
             </div>
             <!-- /.container-fluid -->
 
