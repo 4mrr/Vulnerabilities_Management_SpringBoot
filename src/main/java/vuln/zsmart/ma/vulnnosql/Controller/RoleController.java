@@ -80,13 +80,13 @@ public class RoleController {
     @GetMapping("/users.html/security/user/Edit/{username}")
     public String editUser(@PathVariable String username, Model model){
         User user = myUserDetailServices.findUserByUsername(username);
-        if(roleService.getUserRoles(user) == null)
+        if(myUserDetailServices.findAllRolesoFUser(user) == null)
         {
             model.addAttribute("userRoles", new ArrayList<Role>());
         }else
         {
-            model.addAttribute("userRoles", roleService.getUserRoles(user));
-            model.addAttribute("userNotRoles", roleService.getUserNotRoles(user));
+            model.addAttribute("userRoles", myUserDetailServices.findAllRolesoFUser(user));
+            model.addAttribute("allRoles", roleService.getAll());
         }
         model.addAttribute("user", user);
         return "userEdit";
@@ -94,15 +94,13 @@ public class RoleController {
 
     @RequestMapping("/users.html/security/role/assign/{username}/{roleId}")
     public String assignRole(@PathVariable String username, @PathVariable ObjectId roleId){
-        User user = myUserDetailServices.findUserByUsername(username);
-        roleService.assignUserRole(user.getId(), roleId);
+        roleService.assignUserRole(username, roleId);
         return "redirect:/users.html/security/user/Edit/"+username;
     }
 
     @RequestMapping("/users.html/security/role/unassign/{username}/{roleId}")
     public String unassignRole(@PathVariable String username, @PathVariable ObjectId roleId){
-        User user =myUserDetailServices.findUserByUsername(username);
-        roleService.unassignUserRole(user.getId(), roleId);
+        roleService.unassignUserRole(username, roleId);
         return "redirect:/users.html/security/user/Edit/"+username;
     }
 }

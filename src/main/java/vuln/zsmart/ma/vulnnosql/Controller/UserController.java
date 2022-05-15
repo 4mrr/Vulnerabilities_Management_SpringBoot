@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import vuln.zsmart.ma.vulnnosql.AppConfiguration.Utility;
 import vuln.zsmart.ma.vulnnosql.Beans.*;
+import vuln.zsmart.ma.vulnnosql.DAO.UserDAO;
 import vuln.zsmart.ma.vulnnosql.Services.*;
 
 import javax.mail.MessagingException;
@@ -41,6 +42,8 @@ public class UserController {
     RoleService roleService;
     @Autowired
     ConfirmationTokenRegistrationService confirmationTokenRegistrationService;
+    @Autowired
+    UserDAO userDAO;
 
     @GetMapping("/profile.html")
     public String tables(@AuthenticationPrincipal UserPrincipal userPrincipal ,Model model)
@@ -147,43 +150,70 @@ public class UserController {
         ObjectId id = userPrincipal.getId();
         User user1 = myUserDetailServices.getUserById(id).get();
         User user = myUserDetailServices.findUserByUsername(username);
-        Photo photo = user1.getPhoto();
-        if(photo!=null)
+        Photo photo1 = user1.getPhoto();
+        Photo photo2 = user.getPhoto();
+        if(photo1 !=null && photo2!=null)
         {
-            model.addAttribute("image", Base64.getEncoder().encodeToString(photo.getImage().getData()));
+            model.addAttribute("image", Base64.getEncoder().encodeToString(photo1.getImage().getData()));
+            model.addAttribute("image2", Base64.getEncoder().encodeToString(photo2.getImage().getData()));
         }
         model.addAttribute("userEDIT",user);
+        if(user.getRoles() != null)
+        {
+            model.addAttribute("rolesData",user.getRoles());
+        }
+        if (user.getSocialMedia()!=null)
+        {
+            model.addAttribute("socialMedias",user.getSocialMedia());
+        }
         return "usersUpdate";
     }
 
-
-    @RequestMapping(value="/users.html/testEdit/update")
-    public String update(User user) {
+    @RequestMapping(value="/users.html/testEdit/update", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String update(@AuthenticationPrincipal UserPrincipal userPrincipal,User user) {
 
         Optional<User> user1 = myUserDetailServices.getUserById(user.getId());
-        if (user1.isPresent())
-        {
-            User _user = user1.get();
-            _user.setFirstName(user.getFirstName());
-            _user.setLastName(user.getLastName());
-            _user.setUsername(user.getUsername());
-            _user.setAdress(user.getAdress());
-            _user.setEmail(user.getEmail());
-            _user.setToken(user.getToken());
-            _user.setVulnerbilites(user.getVulnerbilites());
-            _user.setRoles(user.getRoles());
-            _user.setPassword(user.getPassword());
-            _user.setPhoto(user.getPhoto());
-            _user.setSocialMedia(user.getSocialMedia());
-            _user.setEnabled(user.getEnabled());
-            myUserDetailServices.save(_user);
+        ObjectId idSession = userPrincipal.getId();
+        User userSession = myUserDetailServices.getUserById(idSession).get();
+        List<Vulnerbilite> vulns = user1.get().getVulnerbilites();
+        Role roleUser1 = roleService.getRoleByDescription("ADMIN");
+        Role roleUser2 = roleService.getRoleByDescription("SUPER_ADMIN");
+        List<Role> roles = user1.get().getRoles();
+        SocialMedia socialMedias = user1.get().getSocialMedia();
+        Boolean isEnabled = user1.get().getEnabled();
+        Photo photo = user1.get().getPhoto();
+        ObjectId id = user1.get().getId();
+        String username = user1.get().getUsername();
 
-            return "redirect:/users.html/update/byUsername/"+_user.getUsername();
+        if(userSession.getRoles().contains(roleUser1) && userSession.getRoles().contains(roleUser2))
+        {
+            if (user1.isPresent())
+            {
+                User _user = user1.get();
+                _user.setId(id);
+                _user.setFirstName(user.getFirstName());
+                _user.setLastName(user.getLastName());
+                _user.setUsername(username);
+                _user.setAdress(user.getAdress());
+                _user.setEmail(user.getEmail());
+                _user.setVulnerbilites(vulns);
+                _user.setRoles(roles);
+                _user.setPassword(user.getPassword());
+                _user.setPhoto(photo);
+                _user.setSocialMedia(socialMedias);
+                _user.setEnabled(isEnabled);
+
+                myUserDetailServices.save(_user);
+
+                return "redirect:/users.html/update/byUsername/"+user1.get().getUsername();
+            }else
+            {
+                return "users";
+            }
         }else
         {
-            return "users";
+            return "redirect:/accessDenied.html";
         }
-
     }
 
     @RequestMapping(value="/users.html/updateSocialMedia", method = {RequestMethod.PUT, RequestMethod.GET})
@@ -196,7 +226,7 @@ public class UserController {
         myUserDetailServices.save(user);
         return "redirect:/users.html";
     }
-
+/*
     @RequestMapping(value="/users.html/delete", method = {RequestMethod.DELETE, RequestMethod.GET})
     public String delete(String username) {
         User user = myUserDetailServices.findUserByUsername(username);
@@ -209,7 +239,8 @@ public class UserController {
         photoService.deletePhotoById(photo.getId());
         myUserDetailServices.deleteUserById(user.getId());
         return "redirect:/users.html";
-    }
+    }*/
+
     @RequestMapping(value="/users.html/delete/id", method = {RequestMethod.DELETE, RequestMethod.GET})
     public String delete(ObjectId id) {
         User user = myUserDetailServices.getUserById(id).get();

@@ -39,18 +39,34 @@ public class RoleService {
         roleDAO.save(role);
     }
 
-    public void assignUserRole(ObjectId userId, ObjectId roleId){
-        User user  = userDAO.findById(userId).get();
+    public void assignUserRole(String username, ObjectId roleId){
+        User user  = userDAO.findByUsername(username);
         Role role = roleDAO.findById(roleId).get();
         //List<Role> userRoles = user.getRoles();
-            user.getRoles().add(role);
-            userDAO.save(user);
-    }
-    public void unassignUserRole(ObjectId userId, ObjectId roleId){
-        User user  = userDAO.findById(userId).get();
-        Role role = roleDAO.findById(roleId).get();
-        user.getRoles().remove(role);
+        List<Role> roles = user.getRoles();
+        roles.add(role);
+        user.setRoles(roles);
         userDAO.save(user);
+    }
+    public void unassignUserRole(String username, ObjectId roleId){
+        User user  = userDAO.findByUsername(username);
+        Role role = roleDAO.findById(roleId).get();
+        List<Role> roles = new ArrayList<>();
+
+        if(user.getRoles() !=null)
+        {
+            roles.remove(role);
+            user.setRoles(roles);
+            userDAO.save(user);
+        }
+        else
+        {
+            roles.addAll(user.getRoles());
+            roles.remove(role);
+            user.setRoles(roles);
+            userDAO.save(user);
+        }
+
     }
 
     public List<Role> getUserRoles(User user){

@@ -322,11 +322,16 @@
 
         <!-- Page Heading -->
         <h1 class="h3 mb-4 text-gray-800" th:text="'Here you can Edit ' + ${userEDIT.username}">Here you can Edit user </h1>
+        <h2 align="center" th:text="${msg}"></h2>
         <form class="user" th:action="@{/users.html/testEdit/update}"  method="put">
+          <div th:if="${image != null}" align="center">
+            <img th:src="*{'data:image/png;base64,'+image2}" alt="avatar"
+                 class="rounded-circle img-fluid" style="width: 150px;">
+          </div>
           <div class="form-group">
             <label  class="col-form-label">ID :</label>
             <input type="text" class="form-control form-control-user" id="exampleInputEmail"
-                   name="id" th:value="${userEDIT.getId()}">
+                   name="id" th:value="${userEDIT.getId()}" readonly>
           </div>
           <div class="form-group row">
             <div class="col-sm-6 mb-3 mb-sm-0">

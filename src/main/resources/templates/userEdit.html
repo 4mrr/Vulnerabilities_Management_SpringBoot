@@ -297,8 +297,10 @@
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="mr-2 d-none d-lg-inline text-gray-600 small" sec:authentication="principal.username" >Username</span>
-              <img class="img-profile rounded-circle"
-                   th:src="*{'data:image/png;base64,'+image}" >
+              <div th:if="${image!=null}">
+                <img class="img-profile rounded-circle"
+                     th:src="*{'data:image/png;base64,'+image}">
+              </div>
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -389,7 +391,7 @@
                     <td th:text="${userRole.getDescription()}"></td>
                     <td>
                       <div class="btn-group">
-                        <form th:action="@{'/users.html/security/role/unassign/'+${user.username}+'/' +${userRole.id}}" method="post">
+                        <form th:action="@{'/users.html/security/role/unassign/'+${user.getUsername()}+'/' +${userRole.getId()}}" method="post">
 <!--                          <input type="hidden" name="userId" th:value="${user.id}">
                           <input type="hidden" name="roleId" th:value="${userRole.id}">-->
                           <button type="submit" onclick="return confirm('Are you sure you want UNASSIGN ?')"
@@ -410,7 +412,7 @@
 
           <section class="panel">
             <div class="panel-heading">
-              <h3 >Roles currents user is not assigned</h3>
+              <h3 >All Roles Avallaible</h3>
             </div>
             <div class="panel-body">
               <table class="table table-striped table-advance table-hover">
@@ -421,7 +423,7 @@
                   <th><i class="icon_calendar"></i> Details</th>
                   <th><i class="icon_cogs"></i> Action</th>
                 </tr>
-                <tr th:each="userNotRole:${userNotRoles}">
+                <tr th:each="userNotRole:${allRoles}">
                   <td><i class="fa fa-table"></i></td>
                   <td th:text="${userNotRole.description}"></td>
                   <td th:text="${userNotRole.detail}"></td>

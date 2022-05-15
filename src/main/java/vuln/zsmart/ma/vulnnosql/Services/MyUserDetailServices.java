@@ -10,10 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import vuln.zsmart.ma.vulnnosql.Beans.Photo;
-import vuln.zsmart.ma.vulnnosql.Beans.User;
-import vuln.zsmart.ma.vulnnosql.Beans.UserPrincipal;
-import vuln.zsmart.ma.vulnnosql.Beans.Vulnerbilite;
+import vuln.zsmart.ma.vulnnosql.Beans.*;
 import vuln.zsmart.ma.vulnnosql.DAO.PhotoDAO;
 import vuln.zsmart.ma.vulnnosql.DAO.UserDAO;
 
@@ -36,11 +33,17 @@ public User getUserByEmail(String email)
     return userDAO.findByEmail(email);
 }
 
-/*
+
     public void update(User user)
     {
+        user.setPassword(encoder.encode(user.getPassword()));
         userDAO.save(user);
-    }*/
+    }
+
+    public List<Role> findAllRolesoFUser(User user)
+    {
+            return user.getRoles();
+    }
 
     public void save(User user)
     {

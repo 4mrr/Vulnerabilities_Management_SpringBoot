@@ -239,7 +239,11 @@ public class ApplicationController {
     @RequestMapping(value="/tables.html/delete", method = {RequestMethod.DELETE, RequestMethod.GET})
     public String delete(String title) {
         Vulnerbilite vulnerbilite = vulnerabilityService.getVulnByTitle(title);
+        User user = vulnerbilite.getAuthor();
+        user.getVulnerbilites().remove(vulnerbilite);
         vulnerabilityService.deleteVulnById(vulnerbilite.getId());
+        myUserDetailServices.save(user);
+
         return "redirect:/tables.html";
     }
 
