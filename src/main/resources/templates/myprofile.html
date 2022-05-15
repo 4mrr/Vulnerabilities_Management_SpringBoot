@@ -12,15 +12,15 @@
   <meta name="author" content="">
 
   <title>Profile - Page</title>
-  <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico" th:href="@{img/favicon.ico}">
-  <link href="../static/css/style.css" th:href="@{css/style.css}" rel="stylesheet" type="text/css">
+  <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico" th:href="@{/img/favicon.ico}">
+  <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
   <!-- Custom fonts for this template-->
-  <link th:href="@{vendor/fontawesome-free/css/all.min.css}" href="../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" href="../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link th:href="@{css/sb-admin-2.min.css}" href="../static/css/sb-admin-2.min.css" rel="stylesheet">
-  <link href="../static/vendor/datatables/dataTables.bootstrap4.min.css" th:href="@{vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+  <link th:href="@{/css/sb-admin-2.min.css}" href="../static/css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="../static/vendor/datatables/dataTables.bootstrap4.min.css" th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
 
 </head>
 
@@ -350,6 +350,44 @@
           </div>
         </div>
       </div>
+      <div class="modal" id="addModalS">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add Social Media</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <form th:action="@{/myprofile.html/updateSocialMedia}" method="put">
+                <div class="mb-3">
+                  <label class="form-label required">Facebook :</label>
+                  <input type="text" class="form-control" name="facebook" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label required">Instagrame :</label>
+                  <input type="text" class="form-control" name="instagrame" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label required">Twitter :</label>
+                  <input type="text" class="form-control" name="twitter" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label required">Github : </label>
+                  <input type="text" class="form-control" name="github" >
+                </div>
+                <div class="mb-3">
+                  <label class="form-label required">Site Web : </label>
+                  <input type="email" class="form-control" name="siteweb" >
+                </div>
+                <button type="submit" class="samaj-btn">Add</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="samaj-btn" data-bs-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- Begin Page Content -->
       <div class="container-fluid">
@@ -385,7 +423,8 @@
                         <div class="d-flex justify-content-center mb-2">
 <!--                          <button type="button" class="btn btn-primary">Follow</button>-->
                           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Add Photo</button>
-                          <a type="button" th:href="'mailto:' + ${author.getEmail()}" class="btn btn-outline-primary ms-1">Message</a>
+<!--                          <a type="button" th:href="'mailto:' + ${author.getEmail()}" class="btn btn-outline-primary ms-1">Message</a>-->
+                          <a type="button" class="btn btn-outline-primary ms-1" data-bs-toggle="modal" data-bs-target="#addModalS">Social media</a>
                         </div>
                       </div>
                     </div>
@@ -502,7 +541,7 @@
                                           <th scope="col">Verification</th>
                                         </tr>
                                         </thead>
-                                        <tbody th:if="${vulns !=null}">
+                                        <tbody th:if="${vulns != null}">
                                         <tr th:each="vulnn : ${vulns}">
                                           <td th:text="${vulnn.title}"></td>
                                           <td th:text="${vulnn.platform}"></td>
@@ -559,7 +598,7 @@
                                           <th scope="col">Details</th>
                                         </tr>
                                         </thead>
-                                        <tbody th:if="${roles !=null}">
+                                        <tbody th:if="${roles != null}">
                                         <tr th:each="role : ${roles}">
                                           <td th:text="${role.getId()}"></td>
                                           <td th:text="${role.getDescription()}"></td>
@@ -576,10 +615,6 @@
                                 </div>
                               </div>
                             </div>
-
-
-
-
                           </div>
                         </div>
                       </div>
@@ -628,21 +663,21 @@
       <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
       <div class="modal-footer">
         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-primary" href="login.html">Logout</a>
+        <a class="btn btn-primary" th:href="@{/logout}" href="login.html">Logout</a>
       </div>
     </div>
   </div>
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<script src="../static/vendor/jquery/jquery.min.js" th:src="@{vendor/jquery/jquery.min.js}" ></script>
-<script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js" th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script src="../static/vendor/jquery/jquery.min.js" th:src="@{/vendor/jquery/jquery.min.js}" ></script>
+<script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js" th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
 <!-- Core plugin JavaScript-->
-<script src="../static/vendor/jquery-easing/jquery.easing.min.js" th:src="@{vendor/jquery-easing/jquery.easing.min.js}" ></script>
+<script src="../static/vendor/jquery-easing/jquery.easing.min.js" th:src="@{/vendor/jquery-easing/jquery.easing.min.js}" ></script>
 
 <!-- Custom scripts for all pages-->
-<script th:src="@{js/sb-admin-2.min.js}" src="../static/js/sb-admin-2.min.js"></script>
+<script th:src="@{/js/sb-admin-2.min.js}" src="../static/js/sb-admin-2.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous" type="text/javascript"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" type="text/javascript" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" type="text/javascript" crossorigin="anonymous"></script>

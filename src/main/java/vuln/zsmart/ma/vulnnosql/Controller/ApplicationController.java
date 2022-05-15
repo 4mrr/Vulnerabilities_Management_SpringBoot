@@ -139,7 +139,7 @@ public class ApplicationController {
             mailMessage.setSubject("Complete Registration!");
             mailMessage.setFrom("support@vuln.com");
             mailMessage.setText("To confirm your account, please click here : "
-                    +"http://localhost:8082/register.html/confirm-account?token="+confirmationToken.getConfirmationToken());
+                    +"http://localhost:8080/register.html/confirm-account?token="+confirmationToken.getConfirmationToken());
 
             confirmationTokenRegistrationService.sendEmaill(mailMessage);
 

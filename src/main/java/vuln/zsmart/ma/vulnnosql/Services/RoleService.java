@@ -42,7 +42,6 @@ public class RoleService {
     public void assignUserRole(String username, ObjectId roleId){
         User user  = userDAO.findByUsername(username);
         Role role = roleDAO.findById(roleId).get();
-        //List<Role> userRoles = user.getRoles();
         List<Role> roles = user.getRoles();
         roles.add(role);
         user.setRoles(roles);
@@ -66,36 +65,10 @@ public class RoleService {
             user.setRoles(roles);
             userDAO.save(user);
         }
-
     }
 
     public List<Role> getUserRoles(User user){
         return user.getRoles();
-    }
-
-    public List<Role> getUserNotRoles(ObjectId id)
-    {
-        return roleDAO.getUserNotRoles(id);
-    }
-
-    public List<Role> getUserNotRoles(User user)
-    {
-        List<Role> result = new ArrayList<Role>();
-        List<Role> AllRoles=  roleDAO.findAll();
-        if(user.getRoles()== null)
-        {
-            return AllRoles;
-
-        }else{
-            for(int i=0; i< AllRoles.size();i++)
-            {
-                if(!user.getRoles().contains(AllRoles.get(i)))
-                {
-                        result.add(AllRoles.get(i));
-                }
-            }
-            return result;
-        }
     }
 
     public Role getRoleByDescription(String description)

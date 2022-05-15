@@ -216,7 +216,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value="/users.html/updateSocialMedia", method = {RequestMethod.PUT, RequestMethod.GET})
+    @RequestMapping(value="/myprofile.html/updateSocialMedia", method = {RequestMethod.PUT, RequestMethod.GET})
     public String update(@AuthenticationPrincipal UserPrincipal userPrincipal,SocialMedia socialMedia) {
         ObjectId id= userPrincipal.getId();
         User user = myUserDetailServices.getUserById(id).get();
@@ -224,7 +224,7 @@ public class UserController {
         user.setSocialMedia(socialMedia);
         socialMediaService.save(socialMedia);
         myUserDetailServices.save(user);
-        return "redirect:/users.html";
+        return "redirect:/myprofile.html";
     }
 /*
     @RequestMapping(value="/users.html/delete", method = {RequestMethod.DELETE, RequestMethod.GET})

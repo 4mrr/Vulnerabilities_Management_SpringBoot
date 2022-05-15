@@ -18,6 +18,9 @@ public class ConfirmationTokenRegistration {
     @DBRef(db = "xvuln")
     private User user;
 
+    public ConfirmationTokenRegistration() {
+    }
+
     public ConfirmationTokenRegistration(User user) {
         this.user = user;
         createdDate = new Date();
